@@ -1,18 +1,39 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <v-toolbar
+      dark
+      prominent
+      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
+    >
+      <v-toolbar-title>Vuetify</v-toolbar-title>
+    </v-toolbar>
+
+    <manu />
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
-
+import manu from "../components/manu";
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
-    HelloWorld
-  }
-}
+    manu,
+  },
+  mounted() {
+    this.fetch();
+  },
+  methods: {
+    fetch() {
+      this.axios
+        .get("v2/5c77c5b330000051009d64c9")
+        .then((response) => {
+          // console.log(response.data);
+        })
+        .catch((err) => {
+          console.log(err.response);
+        });
+    },
+  },
+};
 </script>
