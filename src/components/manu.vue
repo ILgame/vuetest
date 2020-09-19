@@ -38,7 +38,7 @@
     </v-card> -->
 
     <v-row>
-      <v-col cols="12" md="8">
+      <v-col cols="8" md="8">
         <v-card class="mx-7 my-7">
           <v-row class="mx-8 my-8">
             <v-col div v-for="item in product" :key="item.id">
@@ -62,7 +62,7 @@
         </v-card>
       </v-col>
 
-      <v-col cols="12" md="4">
+      <v-col cols="4" md="4">
         <v-row>
           <v-col>
             <v-card class="mx-7 my-5" width="80%" height="200px">
