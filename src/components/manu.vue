@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-card flast>
+    <!-- <v-card flast>
       <v-row>
         <v-col>
           <v-card class="mx-7 my-5" width="50%">
@@ -11,6 +11,8 @@
               <v-col>
                 <v-btn icon outlined x-large>2</v-btn>
               </v-col>
+            </v-row>
+            <v-row class="text-center">
               <v-col>
                 <v-btn icon outlined x-large>5</v-btn>
               </v-col>
@@ -22,7 +24,7 @@
         </v-col>
 
         <v-col>
-          <v-card class="mx-7 my-5" width="50%">
+          <v-card class="mx-7 my-5" width="50%" >
             <v-row class="text-center">
               <v-card-title>
                 coin
@@ -33,14 +35,14 @@
           </v-card>
         </v-col>
       </v-row>
-    </v-card>
+    </v-card> -->
 
-    <v-card class="mx-7 my-7">
-      <v-row class="mx-5 my-5">
-        <template>
-          <div v-for="item in product" :key="item.id">
-            <v-col>
-              <v-card class="mx-auto" max-width="344">
+    <v-row>
+      <v-col cols="12" md="8">
+        <v-card class="mx-7 my-7">
+          <v-row class="mx-8 my-8">
+            <v-col div v-for="item in product" :key="item.id">
+              <v-card class="d-inline-block mx-auto">
                 <v-img :src="item.image" height="200px"></v-img>
 
                 <v-card-title>
@@ -53,15 +55,51 @@
                   <v-btn color="purple" text>
                     Buy
                   </v-btn>
-
-                  <v-spacer></v-spacer>
                 </v-card-actions>
               </v-card>
             </v-col>
-          </div>
-        </template>
-      </v-row>
-    </v-card>
+          </v-row>
+        </v-card>
+      </v-col>
+
+      <v-col cols="12" md="4">
+        <v-row>
+          <v-col>
+            <v-card class="mx-7 my-5" width="80%" height="200px">
+              <v-row>
+                <v-card-title>
+                  coin
+                  <span class="mx-7">50</span>
+                  &#3647;
+                </v-card-title>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col>
+            <v-card class="mx-7 my-5" width="80%">
+              <v-row class="text-center">
+                <v-col>
+                  <v-btn icon outlined x-large>10</v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn icon outlined x-large>5</v-btn>
+                </v-col>
+              </v-row>
+              <v-row class="text-center">
+                <v-col>
+                  <v-btn icon outlined x-large>2</v-btn>
+                </v-col>
+                <v-col>
+                  <v-btn icon outlined x-large>1</v-btn>
+                </v-col>
+              </v-row>
+            </v-card>
+          </v-col>
+        </v-row>
+      </v-col>
+    </v-row>
   </div>
 </template>
 

@@ -1,11 +1,7 @@
 <template>
   <div>
-    <v-toolbar
-      dark
-      prominent
-      src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg"
-    >
-      <v-toolbar-title>Vuetify</v-toolbar-title>
+    <v-toolbar dark prominent>
+      <v-toolbar-title>Vending Machine</v-toolbar-title>
     </v-toolbar>
 
     <manu />
