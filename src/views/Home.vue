@@ -16,20 +16,7 @@ export default {
   components: {
     manu,
   },
-  mounted() {
-    this.fetch();
-  },
-  methods: {
-    fetch() {
-      this.axios
-        .get("v2/5c77c5b330000051009d64c9")
-        .then((response) => {
-          // console.log(response.data);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    },
-  },
+  mounted() {},
+  methods: {},
 };
 </script>
