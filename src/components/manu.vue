@@ -52,7 +52,12 @@
                 <v-card-subtitle> {{ item.price }} &#3647; </v-card-subtitle>
 
                 <v-card-actions>
-                  <v-btn color="purple" text>
+                  <v-btn
+                    rounded
+                    color="#ffc107"
+                    @click="pay(item.name, item.price, item.in_stock)"
+                    style=""
+                  >
                     Buy
                   </v-btn>
                 </v-card-actions>
@@ -67,15 +72,44 @@
           <v-col>
             <v-card
               class="mx-7 my-5"
-              width="80%"
+              width="85%"
               height="200px"
               :elevation="10"
             >
               <v-row>
                 <v-card-title class="coins">
-                  coin
-                  <span class="mx-7">{{ coin || 0 }}</span>
-                  &#3647;
+                  <v-row>
+                    <v-col lg="12">
+                      <span class="mx-8"
+                        >เหรียญที่รับมา : {{ coin }}</span
+                      ></v-col
+                    ></v-row
+                  >
+                  <v-row>
+                    <v-col lg="12">
+                      <h4>
+                        <span class="mx-8">รวม : {{ totalCoin }}&#3647;</span>
+                      </h4></v-col
+                    ></v-row
+                  >
+                  <v-row>
+                    <v-col lg="12">
+                      <h4>
+                        <span class="mx-8"
+                          >เหรียญที่เหลือ : {{ changeCoin }}</span
+                        >
+                      </h4></v-col
+                    ></v-row
+                  >
+                  <v-row>
+                    <v-col lg="12">
+                      <h4>
+                        <span class="mx-8"
+                          >สินค้าที่เลือก : {{ productName }}</span
+                        >
+                      </h4></v-col
+                    ></v-row
+                  >
                 </v-card-title>
               </v-row>
             </v-card>
@@ -83,33 +117,29 @@
         </v-row>
         <v-row>
           <v-col>
-            <v-card class="mx-7 my-5 coins_number" width="80%" :elevation="10">
+            <v-card class="mx-7 my-5 coins_number" width="85%" :elevation="10">
               <v-row class="text-center">
                 <v-col>
                   <v-btn
+                    pill
+                    @click="insertCoin(10)"
                     class="font-weight-black"
                     fab
                     dark
                     x-large
                     color="#ffcb60"
-                    v-on:click="
-                      input('10');
-                      operater('+');
-                    "
                     >10</v-btn
                   >
                 </v-col>
                 <v-col>
                   <v-btn
+                    pill
+                    @click="insertCoin(5)"
                     class="font-weight-black"
                     fab
                     dark
                     x-large
                     color="#f0e84f"
-                    v-on:click="
-                      input('5');
-                      operater('+');
-                    "
                     >5</v-btn
                   >
                 </v-col>
@@ -117,31 +147,27 @@
               <v-row class="text-center">
                 <v-col>
                   <v-btn
+                    pill
+                    @click="insertCoin(2)"
                     class="font-weight-black"
                     fab
                     dark
                     x-large
                     style="background: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.15) 100%), radial-gradient(at top center, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.40) 120%) #989898;
                     background-blend-mode: multiply,multiply;"
-                    v-on:click="
-                      input('2');
-                      operater('+');
-                    "
                     >2</v-btn
                   >
                 </v-col>
                 <v-col>
                   <v-btn
+                    pill
+                    @click="insertCoin(1)"
                     class="font-weight-black"
                     fab
                     dark
                     x-large
                     style="background-image: linear-gradient(to left, #BDBBBE 0%, #9D9EA3 100%), radial-gradient(88% 271%, rgba(255, 255, 255, 0.25) 0%, rgba(254, 254, 254, 0.25) 1%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(50% 100%, rgba(255, 255, 255, 0.30) 0%, rgba(0, 0, 0, 0.30) 100%);
                     background-blend-mode: normal, lighten, soft-light"
-                    v-on:click="
-                      input('1');
-                      operater('+');
-                    "
                     >1</v-btn
                   >
                 </v-col>
@@ -150,7 +176,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-btn class="re" x-large rounded>Reset</v-btn>
+          <v-btn pill class="re" x-large rounded @click="refund()">clear</v-btn>
         </v-row>
       </v-col>
     </v-row>
@@ -161,9 +187,13 @@
 export default {
   data() {
     return {
-      value: 0,
-      coin: 0,
-      product: null,
+      coin: [],
+      changeCoin: [],
+      in_stock: Boolean,
+      product: [],
+      productName: "",
+      remain: 0,
+      totalCoin: 0,
     };
   },
   mounted() {
@@ -182,15 +212,58 @@ export default {
           console.log(err.response);
         });
     },
-    input: function(num) {
-      if (num == "." && this.coin.includes(".")) return;
-      else if (this.coin == 0) {
-        this.coin = num;
-        this.value = num;
+    insertCoin(res) {
+      this.coin.push(res);
+      this.totalCoin = res + this.totalCoin;
+    },
+    pay(name, price, in_stock) {
+      // check stock
+      //set changeCoin=0
+      this.changeCoin = [];
+      if (in_stock == true) {
+        // check totalCoin > price
+        if (this.totalCoin >= price) {
+          this.totalCoin = this.totalCoin - price;
+          this.remain = this.totalCoin;
+          this.productName = name;
+          //ทอนเงิน
+          while (this.remain > 0) {
+            if (this.remain >= 10) {
+              this.changeCoin.push(10);
+              this.remain = this.remain - 10;
+              this.totalCoin = 0;
+              this.coin = [];
+            } else if (this.remain >= 5) {
+              this.changeCoin.push(5);
+              this.remain = this.remain - 5;
+              this.totalCoin = 0;
+              this.coin = [];
+            } else if (this.remain >= 2) {
+              this.changeCoin.push(2);
+              this.remain = this.remain - 2;
+              this.totalCoin = 0;
+              this.coin = [];
+            } else if (this.remain >= 1) {
+              this.changeCoin.push(1);
+              this.remain = this.remain - 1;
+              this.totalCoin = 0;
+              this.coin = [];
+            } else {
+              this.remain = 0;
+            }
+          }
+        } else {
+          this.productName = "not enough money";
+        }
       } else {
-        this.value += num;
-        this.coin = this.value;
+        this.productName = "out of stock";
       }
+    },
+    refund() {
+      this.changeCoin = this.coin;
+      this.totalCoin = 0;
+      this.productName = this.name;
+      this.coin = [];
     },
   },
 };
@@ -203,12 +276,11 @@ export default {
   flex-wrap: wrap;
   font-weight: 500;
   letter-spacing: 0.0125em;
-  line-height: 2rem;
+  line-height: 1rem;
   word-break: break-all;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 4rem;
-  font-size: 45px;
+  font-size: 30px;
   color: #fdd835;
 }
 .v-btn__content {
@@ -221,7 +293,7 @@ export default {
   position: relative;
   color: black;
   font-size: 20px;
-  font-color: black;
+  /* font-color: black; */
 }
 .col-md-8.col-8 {
   background: #fafafa;

@@ -1,11 +1,15 @@
 <template>
   <div>
-    <v-toolbar dark prominent src="">
+    <v-toolbar
+      dark
+      prominent
+      src=""
+      style="background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);"
+    >
       <v-row>
         <v-col>
           <v-img
             right
-            src="https://www.flaticon.com/svg/static/icons/svg/1027/1027866.svg"
             width="12%"
             height="100%"
             style="margin-right:2rem"
@@ -38,5 +42,11 @@ export default {
   font-size: 40px;
   padding-top: 6px;
   margin-top: 1rem;
+}
+.v-toolbar--prominent:not(.v-toolbar--bottom) .v-toolbar__title {
+  align-self: flex-end;
+  padding-bottom: 6px;
+  padding-top: 0;
+  font-size: 40px;
 }
 </style>
